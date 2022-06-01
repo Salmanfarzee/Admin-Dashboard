@@ -1,34 +1,33 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useApi } from "../utils/restutil";
 
 const Login = () => {
+  const { post } = useApi();
   const navigate = useNavigate();
   const tempcredentials = {
-    username: "salman",
+    email: "salman",
     password: "Test@123",
   };
 
   const [errorMessage, setErrorMessage] = useState({
-    username: "",
+    email: "",
     password: "",
     authenticationError: "",
   });
   const [credential, setCredential] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
-  const goToDashboard = () => {
-    navigate("/dashboard");
-  };
   const validate = (e) => {
     e.preventDefault();
     // form validation
 
-    if (credential.username === "" || credential.username.length < 5) {
+    if (credential.email === "" || credential.email.length < 5) {
       // alert("Name can't be blank");
       setErrorMessage({
-        username: "Username should be atleast 5 characters ",
+        email: "email should be atleast 5 characters ",
       });
       return false;
     } else if (credential.password.length < 6) {
@@ -40,17 +39,29 @@ const Login = () => {
     }
 
     // temp authentication
-
-    if (
-      credential.username === tempcredentials.username &&
-      credential.password === tempcredentials.password
-    ) {
-      navigate("/dashboard");
-    } else {
-      setErrorMessage({
-        authenticationError: "incorrect username and password",
+    post("users/login", credential)
+      .then((res) => {
+        console.log(res);
+        console.log("successfully logged in ");
+        localStorage.setItem(
+          ("accessToken", res.data.accessToken),
+          ("refreshToken", res.data.refreshToken)
+        );
+        navigate("/dashboard");
+      })
+      .catch((e) => {
+        console.log(e);
       });
-    }
+    // if (
+    //   credential.email === tempcredentials.email &&
+    //   credential.password === tempcredentials.password
+    // ) {
+    //   navigate("/dashboard");
+    // } else {
+    //   setErrorMessage({
+    //     authenticationError: "incorrect email and password",
+    //   });
+    // }
   };
 
   return (
@@ -64,14 +75,12 @@ const Login = () => {
           onChange={(e) => {
             setCredential({
               ...credential,
-              username: e.target.value,
+              email: e.target.value,
             });
           }}
         />
         <br />
-        {errorMessage.username && (
-          <p style={{ color: "red" }}>invalid username</p>
-        )}
+        {errorMessage.email && <p style={{ color: "red" }}>invalid email</p>}
         <label>Password:</label>
         <input
           type="password"
@@ -90,7 +99,7 @@ const Login = () => {
         )}
         <button onClick={validate}>Login</button>
         {errorMessage.authenticationError && (
-          <p style={{ color: "red" }}>Invalid Username and Password</p>
+          <p style={{ color: "red" }}>Invalid email and Password</p>
         )}
       </form>
     </div>
