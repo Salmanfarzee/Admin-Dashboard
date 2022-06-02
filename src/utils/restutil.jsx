@@ -33,7 +33,7 @@ export const useApi = () => {
     const data = await axios
       .get(url + path, {
         headers: {
-          "x-access-token": auth?.token,
+          "x-access-token": localStorage.getItem("accessToken"),
         },
         params,
       })
