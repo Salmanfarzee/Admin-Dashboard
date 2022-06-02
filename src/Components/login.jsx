@@ -43,11 +43,9 @@ const Login = () => {
       .then((res) => {
         console.log(res);
         console.log("successfully logged in ");
-        localStorage.setItem(
-          ("accessToken", res.data.accessToken),
-          ("refreshToken", res.data.refreshToken)
-        );
-        navigate("/dashboard");
+        localStorage.setItem("accessToken", res.data.accessToken);
+        localStorage.setItem("refreshToken", res.data.refreshToken);
+        navigate("/");
       })
       .catch((e) => {
         console.log(e);
