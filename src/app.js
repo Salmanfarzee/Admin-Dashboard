@@ -10,7 +10,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Users from "./Components/users";
 import Jobdescription from "./Components/jobdescription";
 import Templates from "./Components/templates";
-import ListVendors from "./Components/listofvendors";
 
 function App() {
   return (
@@ -25,7 +24,6 @@ function App() {
           <Route path="templates" element={<Templates />} />
           <Route path="jobdescription" element={<Jobdescription />} />
           <Route path="users" element={<Users />} />
-          <Route path="listvendors" element={<ListVendors />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,9 +1,17 @@
 import React from "react";
 import { useState } from "react";
 import { useApi } from "../utils/restutil";
+import ListVendors from "./listofvendors";
 
 const Vendors = () => {
   const { post } = useApi();
+  const [toggle, setToggle] = useState(false);
+  const handler = () => {
+    setToggle(true);
+  };
+  const exit = () => {
+    setToggle(false);
+  };
 
   const [vendors, setVendors] = useState({
     name: "",
@@ -63,61 +71,68 @@ const Vendors = () => {
   return (
     <div className="container">
       <h1>vendors</h1>
-      <form>
-        <label htmlFor="">
-          Vendor Name:
-          <input
-            name="name"
-            type="name"
-            onChange={(e) => {
-              setVendors({ ...vendors, name: e.target.value });
-            }}
-          />
-        </label>
-        {fail.name && <p style={{ color: "red" }}>{fail.name}</p>}
+      <button onClick={handler}>show form /hide form</button>
+      {toggle ? (
+        <form>
+          <label htmlFor="">
+            Vendor Name:
+            <input
+              name="name"
+              type="name"
+              onChange={(e) => {
+                setVendors({ ...vendors, name: e.target.value });
+              }}
+            />
+          </label>
+          {fail.name && <p style={{ color: "red" }}>{fail.name}</p>}
 
-        <label htmlFor="">
-          website url:
-          <input
-            name="websiteUrl"
-            type="websiteUrl"
-            onChange={(e) => {
-              setVendors({ ...vendors, websiteUrl: e.target.value });
-            }}
-          />
-        </label>
-        {fail.websiteUrl && <p style={{ color: "red" }}>{fail.websiteUrl}</p>}
+          <label htmlFor="">
+            website url:
+            <input
+              name="websiteUrl"
+              type="websiteUrl"
+              onChange={(e) => {
+                setVendors({ ...vendors, websiteUrl: e.target.value });
+              }}
+            />
+          </label>
+          {fail.websiteUrl && <p style={{ color: "red" }}>{fail.websiteUrl}</p>}
 
-        <br />
+          <br />
 
-        <br />
-        <label htmlFor="">
-          Email:
-          <input
-            name="email"
-            type="email"
-            onChange={(e) => {
-              setVendors({ ...vendors, email: e.target.value });
-            }}
-          />
-        </label>
-        {fail.email && <p style={{ color: "red" }}>{fail.email}</p>}
+          <br />
+          <label htmlFor="">
+            Email:
+            <input
+              name="email"
+              type="email"
+              onChange={(e) => {
+                setVendors({ ...vendors, email: e.target.value });
+              }}
+            />
+          </label>
+          {fail.email && <p style={{ color: "red" }}>{fail.email}</p>}
 
-        <label htmlFor="">
-          Phone:
-          <input
-            type="phone"
-            name="phone"
-            onChange={(e) => {
-              setVendors({ ...vendors, phone: e.target.value });
-            }}
-          />
-        </label>
-        {fail.phone && <p style={{ color: "red" }}>{fail.phone}</p>}
-        <br />
-        <button onClick={validateVendor}>save</button>
-        <button type="submit">cancel</button>
-      </form>
+          <label htmlFor="">
+            Phone:
+            <input
+              type="phone"
+              name="phone"
+              onChange={(e) => {
+                setVendors({ ...vendors, phone: e.target.value });
+              }}
+            />
+          </label>
+          {fail.phone && <p style={{ color: "red" }}>{fail.phone}</p>}
+          <br />
+          <button onClick={validateVendor}>save</button>
+          <button onClick={exit} type="submit">
+            cancel
+          </button>
+        </form>
+      ) : (
+        <ListVendors />
+      )}
     </div>
   );
 };

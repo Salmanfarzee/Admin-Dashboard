@@ -5,10 +5,10 @@ import { useApi } from "../utils/restutil";
 const Login = () => {
   const { post } = useApi();
   const navigate = useNavigate();
-  const tempcredentials = {
-    email: "salman",
-    password: "Test@123",
-  };
+  // const tempcredentials = {
+  //   email: "salman",
+  //   password: "Test@123",
+  // };
 
   const [errorMessage, setErrorMessage] = useState({
     email: "",

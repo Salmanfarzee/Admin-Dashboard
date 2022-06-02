@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useApi } from "../utils/restutil";
 const ListVendors = () => {
   const [getVendors, setGetVendors] = useState([]);
-  const [state, setState] = useState("");
 
   const { get } = useApi();
 
@@ -19,7 +18,6 @@ const ListVendors = () => {
 
   return (
     <div>
-      <button>show form /hide form</button>
       <table>
         <tr>
           <th>Name:</th>
