@@ -6,15 +6,20 @@ const Vendors = () => {
   const { post } = useApi();
 
   const [vendors, setVendors] = useState({
-    vendorName: "",
+    name: "",
     websiteUrl: "",
-
     email: "",
     phone: "",
   });
+  const reset = {
+    name: "",
+    websiteUrl: "",
+    email: "",
+    phone: "",
+  };
 
   const [fail, setFail] = useState({
-    vendorName: "",
+    name: "",
     websiteUrl: "",
     email: "",
     phone: "",
@@ -23,9 +28,9 @@ const Vendors = () => {
 
   const validateVendor = (e) => {
     e.preventDefault();
-    if (vendors.vendorName === "" || vendors.vendorName.length < 5) {
+    if (vendors.name === "" || vendors.name.length < 5) {
       setFail({
-        vendorName: "Vendorname should be atleast 5 characters ",
+        name: "name should be atleast 5 characters ",
       });
       return false;
     } else if (vendors.websiteUrl === "") {
@@ -43,17 +48,18 @@ const Vendors = () => {
         phone: "phone number should have 10 numbers",
       });
       return false;
-    } else {
-      return;
     }
+
+    post("/vendors", vendors)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        setFail({ apiErrorMessage: "something went wrong" });
+      });
   };
-  post("/vendors", vendors)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+
   return (
     <div className="container">
       <h1>vendors</h1>
@@ -61,14 +67,14 @@ const Vendors = () => {
         <label htmlFor="">
           Vendor Name:
           <input
-            name="vendorName"
-            type="vendorName"
+            name="name"
+            type="name"
             onChange={(e) => {
-              setVendors({ ...vendors, vendorName: e.target.value });
+              setVendors({ ...vendors, name: e.target.value });
             }}
           />
         </label>
-        {fail.vendorName && <p style={{ color: "red" }}>{fail.vendorName}</p>}
+        {fail.name && <p style={{ color: "red" }}>{fail.name}</p>}
 
         <label htmlFor="">
           website url:
@@ -83,16 +89,6 @@ const Vendors = () => {
         {fail.websiteUrl && <p style={{ color: "red" }}>{fail.websiteUrl}</p>}
 
         <br />
-        {/* <label htmlFor="">
-          Hiring for:
-          <input
-            name="hiringfor"
-            type="hiringfor"
-            onChange={(e) => {
-              setVendors({ ...vendors, hiringfor: e.target.value });
-            }}
-          />
-        </label> */}
 
         <br />
         <label htmlFor="">

@@ -15,7 +15,7 @@ export const useApi = () => {
         auth && auth.token
           ? {
               headers: {
-                "x-access-token": auth.token,
+                "x-access-token": localStorage.getItem("accessToken"),
               },
             }
           : ""
@@ -29,8 +29,25 @@ export const useApi = () => {
       });
     return data;
   };
+  const get = async (path, params) => {
+    const data = await axios
+      .get(url + path, {
+        headers: {
+          "x-access-token": auth?.token,
+        },
+        params,
+      })
+      .then((resp) => {
+        return resp;
+      })
+      .catch((e) => {
+        console.error(e);
+        throw e;
+      });
+    return data;
+  };
 
-  return { post };
+  return { post, get };
 };
 
 export default useApi;
