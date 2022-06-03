@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../AppContext";
 import { useApi } from "../utils/restutil";
 
 const Login = () => {
   const { post } = useApi();
   const navigate = useNavigate();
+  const { setAuth, setRefreshToken } = useContext(AppContext);
   // const tempcredentials = {
   //   email: "salman",
   //   password: "Test@123",
@@ -43,8 +45,10 @@ const Login = () => {
       .then((res) => {
         console.log(res);
         console.log("successfully logged in ");
-        localStorage.setItem("accessToken", res.data.accessToken);
-        localStorage.setItem("refreshToken", res.data.refreshToken);
+        setAuth(res.data.accessToken);
+        setRefreshToken(res.data.refreshtoken);
+        // localStorage.setItem("accessToken", res.data.accessToken);
+        // localStorage.setItem("refreshToken", res.data.refreshToken);
         navigate("/");
       })
       .catch((e) => {

@@ -1,9 +1,12 @@
 import axios from "axios";
+import { useContext } from "react";
+import { AppContext } from "../AppContext";
 
 export const useApi = () => {
-  const auth = {
-    token: "salman",
-  };
+  const { auth } = useContext(AppContext);
+  // const auth = {
+  //   token: "salman",
+  // };
   const url = "http://localhost:4000/";
 
   const post = async (path, body) => {
@@ -15,7 +18,7 @@ export const useApi = () => {
         auth && auth.token
           ? {
               headers: {
-                "x-access-token": localStorage.getItem("accessToken"),
+                "x-access-token": auth.token,
               },
             }
           : ""
@@ -33,7 +36,7 @@ export const useApi = () => {
     const data = await axios
       .get(url + path, {
         headers: {
-          "x-access-token": localStorage.getItem("accessToken"),
+          "x-access-token": auth.token,
         },
         params,
       })

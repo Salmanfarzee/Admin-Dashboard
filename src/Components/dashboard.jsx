@@ -5,7 +5,12 @@ const Dashboard = () => {
   return (
     <div className="wrapper">
       <div className="sidebar">
-        <h2 className="heading"><span><i class="fa-brands fa-drupal"></i></span>Logo</h2>
+        <h2 className="heading">
+          <span>
+            <i class="fa-brands fa-drupal"></i>
+          </span>
+          Logo
+        </h2>
         <ul>
           <li>
             <Link to="/">Dashboard</Link>
@@ -32,17 +37,16 @@ const Dashboard = () => {
       </div>
 
       <div className="content">
-      <div class='topnav'>
-      <div class="icon-bar">
-        <i class="fa-solid fa-bell"></i>
-        <i className="fa-solid fa-envelope"></i>
-        
-      </div>
+        <div class="topnav">
+          <div class="icon-bar">
+            <i class="fa-solid fa-bell"></i>
+            <i className="fa-solid fa-envelope"></i>
+          </div>
+        </div>
         <Outlet />
       </div>
     </div>
-    </div>
   );
 };
- 
+
 export default Dashboard;
