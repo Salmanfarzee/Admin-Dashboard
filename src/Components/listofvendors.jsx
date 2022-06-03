@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useApi } from "../utils/restutil";
-const ListVendors = () => {
+
+const ListVendors = ({ setVendors, setToggle }) => {
   const [getVendors, setGetVendors] = useState([]);
+
+  const editName = (vendor) => {
+    debugger;
+    setVendors(vendor);
+    setToggle(true);
+  };
 
   const { get } = useApi();
 
@@ -24,20 +31,29 @@ const ListVendors = () => {
           <th>WebsiteUrl:</th>
           <th>Email:</th>
           <th>Phone:</th>
+          <th>action</th>
         </tr>
-        {getVendors.map((getVendor) => {
+        {getVendors.map((vendor) => {
           return (
-            <div>
-              <tr>
-                <td>{getVendor.name}</td>
+            <tr>
+              <td>{vendor.name}</td>
 
-                <td>{getVendor.websiteUrl}</td>
+              <td>{vendor.websiteUrl}</td>
 
-                <td>{getVendor.email}</td>
+              <td>{vendor.email}</td>
 
-                <td>{getVendor.phone}</td>
-              </tr>
-            </div>
+              <td>{vendor.phone}</td>
+              <td>
+                <button
+                  onClick={() => {
+                    editName(vendor);
+                  }}
+                >
+                  edit
+                </button>
+                <button>delete</button>
+              </td>
+            </tr>
           );
         })}
       </table>

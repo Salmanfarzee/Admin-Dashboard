@@ -19,12 +19,6 @@ const Vendors = () => {
     email: "",
     phone: "",
   });
-  const reset = {
-    name: "",
-    websiteUrl: "",
-    email: "",
-    phone: "",
-  };
 
   const [fail, setFail] = useState({
     name: "",
@@ -77,6 +71,7 @@ const Vendors = () => {
           <label htmlFor="">
             Vendor Name:
             <input
+              value={vendors.name || ""}
               name="name"
               type="name"
               onChange={(e) => {
@@ -89,6 +84,7 @@ const Vendors = () => {
           <label htmlFor="">
             website url:
             <input
+              value={vendors.websiteUrl || ""}
               name="websiteUrl"
               type="websiteUrl"
               onChange={(e) => {
@@ -104,6 +100,7 @@ const Vendors = () => {
           <label htmlFor="">
             Email:
             <input
+              value={vendors.email || ""}
               name="email"
               type="email"
               onChange={(e) => {
@@ -116,6 +113,7 @@ const Vendors = () => {
           <label htmlFor="">
             Phone:
             <input
+              value={vendors.phone || ""}
               type="phone"
               name="phone"
               onChange={(e) => {
@@ -131,7 +129,7 @@ const Vendors = () => {
           </button>
         </form>
       ) : (
-        <ListVendors />
+        <ListVendors setVendors={setVendors} setToggle={setToggle} />
       )}
     </div>
   );

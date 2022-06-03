@@ -3,6 +3,9 @@ display: flex;
 /* position: relative; */
 }
 
+table, th, td {
+    border: 1px solid black;
+  }
 .wrapper .sidebar{
     /* position: fixed; */
     width: 20%;
