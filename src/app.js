@@ -10,6 +10,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Users from "./Components/users";
 import Jobdescription from "./Components/jobdescription";
 import Templates from "./Components/templates";
+import { PrivateRoute } from "./Components/Route";
 
 function App() {
   return (
@@ -21,7 +22,14 @@ function App() {
           <Route path="/" element={<Dashboard />}>
             <Route path="profiles" element={<Profiles />} />
             <Route path="meetings" element={<Meetings />} />
-            <Route path="vendors" element={<Vendors />} />
+            <Route
+              path="vendors"
+              element={
+                <PrivateRoute redirectTo="/auth/login">
+                  <Vendors />
+                </PrivateRoute>
+              }
+            />
             <Route path="templates" element={<Templates />} />
             <Route path="jobdescription" element={<Jobdescription />} />
             <Route path="users" element={<Users />} />

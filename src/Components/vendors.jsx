@@ -13,7 +13,7 @@ const Vendors = () => {
     setToggle(false);
   };
 
-  const [vendors, setVendors] = useState({
+  const [vendor, setVendors] = useState({
     name: "",
     websiteUrl: "",
     email: "",
@@ -30,52 +30,55 @@ const Vendors = () => {
 
   const validateVendor = (e) => {
     e.preventDefault();
-    if (vendors.name === "" || vendors.name.length < 5) {
+    if (vendor.name === "" || vendor.name.length < 5) {
       setFail({
         name: "name should be atleast 5 characters ",
       });
       return false;
-    } else if (vendors.websiteUrl === "") {
+    } else if (vendor.websiteUrl === "") {
       setFail({
         websiteUrl: "website URL should be blank",
       });
       return false;
-    } else if (vendors.email === "") {
+    } else if (vendor.email === "") {
       setFail({
         email: "website URL should be blank",
       });
       return false;
-    } else if (vendors.phone.length < 10) {
+    } else if (vendor.phone.length < 10) {
       setFail({
         phone: "phone number should have 10 numbers",
       });
       return false;
     }
 
-    post("/vendors", vendors)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((e) => {
-        console.log(e);
-        setFail({ apiErrorMessage: "something went wrong" });
-      });
+    if (vendor.id) {
+    } else {
+      post("/vendors", vendor)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.log(e);
+          setFail({ apiErrorMessage: "something went wrong" });
+        });
+    }
   };
 
   return (
     <div className="container">
-      <h1>vendors</h1>
+      <h1>Vendors</h1>
       <button onClick={handler}>show form /hide form</button>
       {toggle ? (
         <form>
           <label htmlFor="">
             Vendor Name:
             <input
-              value={vendors.name || ""}
+              value={vendor.name || ""}
               name="name"
               type="name"
               onChange={(e) => {
-                setVendors({ ...vendors, name: e.target.value });
+                setVendors({ ...vendor, name: e.target.value });
               }}
             />
           </label>
@@ -84,11 +87,11 @@ const Vendors = () => {
           <label htmlFor="">
             website url:
             <input
-              value={vendors.websiteUrl || ""}
+              value={vendor.websiteUrl || ""}
               name="websiteUrl"
               type="websiteUrl"
               onChange={(e) => {
-                setVendors({ ...vendors, websiteUrl: e.target.value });
+                setVendors({ ...vendor, websiteUrl: e.target.value });
               }}
             />
           </label>
@@ -100,11 +103,11 @@ const Vendors = () => {
           <label htmlFor="">
             Email:
             <input
-              value={vendors.email || ""}
+              value={vendor.email || ""}
               name="email"
               type="email"
               onChange={(e) => {
-                setVendors({ ...vendors, email: e.target.value });
+                setVendors({ ...vendor, email: e.target.value });
               }}
             />
           </label>
@@ -113,11 +116,11 @@ const Vendors = () => {
           <label htmlFor="">
             Phone:
             <input
-              value={vendors.phone || ""}
+              value={vendor.phone || ""}
               type="phone"
               name="phone"
               onChange={(e) => {
-                setVendors({ ...vendors, phone: e.target.value });
+                setVendors({ ...vendor, phone: e.target.value });
               }}
             />
           </label>
